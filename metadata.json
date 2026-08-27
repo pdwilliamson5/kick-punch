@@ -1,6 +1,0 @@
-{
-  "name": "Kick Punch - Fighting Card Game",
-  "description": "The strategic fighting card game bringing arcade fighter mind games to tabletop battles with simultaneous move reveals, fighter specials, and cinematic finishers.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
