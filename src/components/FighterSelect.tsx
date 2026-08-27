@@ -68,14 +68,14 @@ export const FighterSelect: React.FC<FighterSelectProps> = ({
 
         <div className="relative z-10">
           <div className="flex items-center gap-2">
-            <span className="font-pixel text-[10px] text-amber-400 animate-pulse bg-red-950 px-2 py-0.5 rounded border border-red-600">
+            <span className="font-pixel text-[10px] text-white animate-pulse bg-red-600 px-2 py-0.5 rounded border border-amber-400">
               ★ CPS-II ARCADE ★
             </span>
-            <span className="font-pixel text-[9px] text-zinc-400">
+            <span className="font-pixel text-[9px] text-white/90">
               CHOOSE YOUR FIGHTER
             </span>
           </div>
-          <h2 className="font-arcade text-3xl sm:text-5xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-red-500 to-rose-500 text-shadow-arcade mt-0.5">
+          <h2 className="font-arcade text-3xl sm:text-5xl font-black uppercase tracking-wider text-white text-shadow-arcade mt-0.5">
             BATTLE CHARACTER SELECT
           </h2>
         </div>

@@ -330,68 +330,70 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
       <div className="relative z-10">
 
       {/* Arena Title & Mode Info */}
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 mb-4">
-        <div className="flex items-center gap-2">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 mb-2 sm:mb-4 px-1">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <button
             onClick={onExitToSelect}
-            className="px-3 py-1.5 rounded-lg bg-black hover:bg-zinc-900 border-2 border-zinc-700 text-[10px] font-pixel font-bold text-amber-400 uppercase tracking-wider shadow-md hover:border-amber-400 transition-all"
+            className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-black hover:bg-zinc-900 border-2 border-zinc-700 text-[9px] sm:text-[10px] font-pixel font-bold text-white uppercase tracking-wider shadow-md hover:border-amber-400 transition-all active:scale-95"
           >
-            ◄ EXIT MATCH
+            ◄ EXIT
           </button>
-          <span className="text-[10px] font-pixel text-amber-300 bg-black/90 px-3 py-1.5 rounded-lg border-2 border-amber-500/60 uppercase shadow-md">
+          <span className="text-[9px] sm:text-[10px] font-pixel text-white bg-black/90 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border-2 border-amber-500/60 uppercase shadow-md truncate max-w-[130px] sm:max-w-none">
             STAGE: {arena.name}
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-lg bg-black border-2 border-red-500 text-red-400 font-pixel text-[10px] font-bold shadow-[0_0_10px_rgba(239,68,68,0.5)]">
-            ROUND {currentRound} — TURN {turnCount}
+        <div className="flex items-center gap-1.5">
+          <span className="px-2 sm:px-3 py-1 rounded-lg bg-black border-2 border-red-500 text-white font-pixel text-[9px] sm:text-[10px] font-bold shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+            ROUND {currentRound} • TURN {turnCount}
           </span>
         </div>
       </div>
 
-      {/* 90s ARCADE HEALTH BARS & FIGHTERS HEADS-UP DISPLAY */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-3 items-center mb-6">
+      {/* 90s ARCADE HEALTH BARS & FIGHTERS HEADS-UP DISPLAY (PHONE RESPONSIVE) */}
+      <div className="max-w-7xl mx-auto mb-3 sm:mb-6">
         
-        {/* P1 HUD */}
-        <div className="md:col-span-5 bg-black/95 p-3.5 rounded-2xl border-2 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
-          <div className="flex items-center gap-3 mb-1">
-            <img
-              src={p1State.fighter.image}
-              alt={p1State.fighter.name}
-              className="w-14 h-16 object-cover rounded-lg border-2 border-amber-400 shadow-md"
-              referrerPolicy="no-referrer"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <span className="font-arcade-action text-2xl sm:text-3xl font-black uppercase text-amber-400 tracking-wide truncate text-shadow-arcade">
-                  {p1State.fighter.name}
-                </span>
-                <span className="font-pixel text-[11px] font-bold text-amber-300">
-                  {p1State.currentHp} / {p1State.maxHp} HP
-                </span>
+        {/* Mobile Unified 2-Fighter HUD (< md screen) */}
+        <div className="md:hidden bg-black/95 p-2 rounded-xl border-2 border-amber-500/80 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+          <div className="grid grid-cols-12 gap-1.5 items-center">
+            
+            {/* P1 Mobile Column */}
+            <div className="col-span-5 flex flex-col">
+              <div className="flex items-center gap-1.5 mb-1">
+                <img
+                  src={p1State.fighter.image}
+                  alt={p1State.fighter.name}
+                  className="w-8 h-9 object-cover rounded border border-amber-400 shrink-0"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="min-w-0 flex-1">
+                  <span className="font-arcade-action text-xs font-black uppercase text-white truncate block leading-tight text-shadow-arcade">
+                    {p1State.fighter.name}
+                  </span>
+                  <span className="font-pixel text-[8px] text-amber-300 block">
+                    {p1State.currentHp}/{p1State.maxHp} HP
+                  </span>
+                </div>
               </div>
-              
-              {/* 90s Street Fighter Style Thick Yellow HP Bar */}
-              <div className="h-5 bg-zinc-950 rounded border-2 border-amber-500/80 overflow-hidden relative mt-1 shadow-inner">
+
+              {/* P1 HP Bar */}
+              <div className="h-3 bg-zinc-950 rounded border border-amber-500/80 overflow-hidden relative shadow-inner">
                 <div 
                   className="h-full bg-gradient-to-r from-amber-300 via-yellow-400 to-red-500 transition-all duration-300"
                   style={{ width: `${(p1State.currentHp / p1State.maxHp) * 100}%` }}
                 />
               </div>
 
-              {/* Super Meter (3 Pips) */}
-              <div className="flex items-center justify-between mt-2">
-                <span className="font-pixel text-[8px] uppercase font-bold text-purple-400">
-                  SUPER METER
-                </span>
-                <div className="flex items-center gap-1.5">
+              {/* P1 Super Meter */}
+              <div className="flex items-center justify-between mt-1">
+                <span className="font-pixel text-[6px] text-purple-400 uppercase">SUPER</span>
+                <div className="flex gap-1">
                   {[1, 2, 3].map((pip) => (
                     <div
                       key={pip}
-                      className={`w-6 h-3 rounded-sm border transition-all ${
+                      className={`w-3.5 h-1.5 rounded-xs border transition-all ${
                         p1State.superMeter >= pip
-                          ? 'bg-purple-500 border-purple-300 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse'
+                          ? 'bg-purple-500 border-purple-300 shadow-[0_0_6px_rgba(168,85,247,0.8)]'
                           : 'bg-zinc-900 border-zinc-700'
                       }`}
                     />
@@ -399,106 +401,251 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
                 </div>
               </div>
 
-              {/* Active Buff Badges */}
-              <div className="flex flex-wrap gap-1 mt-1.5">
+              {/* P1 Buffs */}
+              <div className="flex flex-wrap gap-0.5 mt-0.5">
                 {(p1State.activeBuffs.hypeStacks || 0) > 0 && (
-                  <span className="font-pixel text-[8px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500 font-bold">
-                    🔥 HYPE x{p1State.activeBuffs.hypeStacks}
+                  <span className="font-pixel text-[6px] bg-amber-950 text-amber-300 px-1 rounded border border-amber-600">
+                    🔥x{p1State.activeBuffs.hypeStacks}
                   </span>
                 )}
                 {(p1State.activeBuffs.poisonStacks || 0) > 0 && (
-                  <span className="font-pixel text-[8px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-500 font-bold">
-                    ☣ POISON x{p1State.activeBuffs.poisonStacks}
+                  <span className="font-pixel text-[6px] bg-purple-950 text-purple-300 px-1 rounded border border-purple-600">
+                    ☣x{p1State.activeBuffs.poisonStacks}
                   </span>
                 )}
                 {(p1State.activeBuffs.burnStacks || 0) > 0 && (
-                  <span className="font-pixel text-[8px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded border border-red-500 font-bold">
-                    ♨ BURN x{p1State.activeBuffs.burnStacks}
+                  <span className="font-pixel text-[6px] bg-red-950 text-red-300 px-1 rounded border border-red-600">
+                    ♨x{p1State.activeBuffs.burnStacks}
                   </span>
                 )}
               </div>
-
             </div>
-          </div>
-        </div>
 
-        {/* Center Versus Indicator */}
-        <div className="md:col-span-2 flex flex-col items-center justify-center text-center">
-          <div className="w-12 h-12 rounded-full bg-black border-2 border-red-500 flex items-center justify-center font-arcade-action text-red-500 font-black text-xl shadow-[0_0_15px_rgba(239,68,68,0.7)]">
-            VS
-          </div>
-          <span className="font-pixel text-[8px] uppercase text-zinc-400 tracking-widest mt-1">
-            SIMULTANEOUS
-          </span>
-        </div>
-
-        {/* P2 HUD */}
-        <div className="md:col-span-5 bg-black/95 p-3.5 rounded-2xl border-2 border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
-          <div className="flex items-center gap-3 mb-1 flex-row-reverse">
-            <img
-              src={p2State.fighter.image}
-              alt={p2State.fighter.name}
-              className="w-14 h-16 object-cover rounded-lg border-2 border-red-500 shadow-md"
-              referrerPolicy="no-referrer"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <span className="font-pixel text-[11px] font-bold text-red-400">
-                  {p2State.currentHp} / {p2State.maxHp} HP
-                </span>
-                <span className="font-arcade-action text-2xl sm:text-3xl font-black uppercase text-red-400 tracking-wide truncate text-shadow-arcade">
-                  {p2State.fighter.name} {gameMode === 'vs_ai' ? '(CPU)' : '(P2)'}
-                </span>
+            {/* Center VS Badge */}
+            <div className="col-span-2 flex flex-col items-center justify-center text-center">
+              <div className="w-7 h-7 rounded-full bg-black border border-red-500 flex items-center justify-center font-arcade-action text-red-500 font-black text-xs shadow-[0_0_8px_rgba(239,68,68,0.7)]">
+                VS
               </div>
-              
-              {/* HP Bar */}
-              <div className="h-5 bg-zinc-950 rounded border-2 border-red-500/80 overflow-hidden relative mt-1 shadow-inner">
+            </div>
+
+            {/* P2 Mobile Column */}
+            <div className="col-span-5 flex flex-col">
+              <div className="flex items-center gap-1.5 mb-1 flex-row-reverse">
+                <img
+                  src={p2State.fighter.image}
+                  alt={p2State.fighter.name}
+                  className="w-8 h-9 object-cover rounded border border-red-500 shrink-0"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="min-w-0 flex-1 text-right">
+                  <span className="font-arcade-action text-xs font-black uppercase text-white truncate block leading-tight text-shadow-arcade">
+                    {p2State.fighter.name}
+                  </span>
+                  <span className="font-pixel text-[8px] text-red-400 block">
+                    {p2State.currentHp}/{p2State.maxHp} HP
+                  </span>
+                </div>
+              </div>
+
+              {/* P2 HP Bar */}
+              <div className="h-3 bg-zinc-950 rounded border border-red-500/80 overflow-hidden relative shadow-inner">
                 <div 
                   className="h-full bg-gradient-to-l from-red-500 via-amber-400 to-yellow-300 transition-all duration-300 ml-auto"
                   style={{ width: `${(p2State.currentHp / p2State.maxHp) * 100}%` }}
                 />
               </div>
 
-              {/* Super Meter (3 Pips) */}
-              <div className="flex items-center justify-between mt-2">
-                <div className="flex items-center gap-1.5">
+              {/* P2 Super Meter */}
+              <div className="flex items-center justify-between mt-1 flex-row-reverse">
+                <span className="font-pixel text-[6px] text-purple-400 uppercase">SUPER</span>
+                <div className="flex gap-1">
                   {[1, 2, 3].map((pip) => (
                     <div
                       key={pip}
-                      className={`w-6 h-3 rounded-sm border transition-all ${
+                      className={`w-3.5 h-1.5 rounded-xs border transition-all ${
                         p2State.superMeter >= pip
-                          ? 'bg-purple-500 border-purple-300 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse'
+                          ? 'bg-purple-500 border-purple-300 shadow-[0_0_6px_rgba(168,85,247,0.8)]'
                           : 'bg-zinc-900 border-zinc-700'
                       }`}
                     />
                   ))}
                 </div>
-                <span className="font-pixel text-[8px] uppercase font-bold text-purple-400">
-                  SUPER METER
-                </span>
               </div>
 
-              {/* Active Buff Badges */}
-              <div className="flex flex-wrap justify-end gap-1 mt-1.5">
+              {/* P2 Buffs */}
+              <div className="flex flex-wrap justify-end gap-0.5 mt-0.5">
                 {(p2State.activeBuffs.hypeStacks || 0) > 0 && (
-                  <span className="font-pixel text-[8px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500 font-bold">
-                    🔥 HYPE x{p2State.activeBuffs.hypeStacks}
+                  <span className="font-pixel text-[6px] bg-amber-950 text-amber-300 px-1 rounded border border-amber-600">
+                    🔥x{p2State.activeBuffs.hypeStacks}
                   </span>
                 )}
                 {(p2State.activeBuffs.poisonStacks || 0) > 0 && (
-                  <span className="font-pixel text-[8px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-500 font-bold">
-                    ☣ POISON x{p2State.activeBuffs.poisonStacks}
+                  <span className="font-pixel text-[6px] bg-purple-950 text-purple-300 px-1 rounded border border-purple-600">
+                    ☣x{p2State.activeBuffs.poisonStacks}
                   </span>
                 )}
                 {(p2State.activeBuffs.burnStacks || 0) > 0 && (
-                  <span className="font-pixel text-[8px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded border border-red-500 font-bold">
-                    ♨ BURN x{p2State.activeBuffs.burnStacks}
+                  <span className="font-pixel text-[6px] bg-red-950 text-red-300 px-1 rounded border border-red-600">
+                    ♨x{p2State.activeBuffs.burnStacks}
                   </span>
                 )}
               </div>
+            </div>
 
+          </div>
+        </div>
+
+        {/* Desktop Detailed HUD (>= md screen) */}
+        <div className="hidden md:grid grid-cols-12 gap-3 items-center">
+          
+          {/* P1 HUD */}
+          <div className="col-span-5 bg-black/95 p-3.5 rounded-2xl border-2 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+            <div className="flex items-center gap-3 mb-1">
+              <img
+                src={p1State.fighter.image}
+                alt={p1State.fighter.name}
+                className="w-14 h-16 object-cover rounded-lg border-2 border-amber-400 shadow-md"
+                referrerPolicy="no-referrer"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="font-arcade-action text-2xl sm:text-3xl font-black uppercase text-white tracking-wide truncate text-shadow-arcade">
+                    {p1State.fighter.name}
+                  </span>
+                  <span className="font-pixel text-[11px] font-bold text-amber-300">
+                    {p1State.currentHp} / {p1State.maxHp} HP
+                  </span>
+                </div>
+                
+                {/* HP Bar */}
+                <div className="h-5 bg-zinc-950 rounded border-2 border-amber-500/80 overflow-hidden relative mt-1 shadow-inner">
+                  <div 
+                    className="h-full bg-gradient-to-r from-amber-300 via-yellow-400 to-red-500 transition-all duration-300"
+                    style={{ width: `${(p1State.currentHp / p1State.maxHp) * 100}%` }}
+                  />
+                </div>
+
+                {/* Super Meter (3 Pips) */}
+                <div className="flex items-center justify-between mt-2">
+                  <span className="font-pixel text-[8px] uppercase font-bold text-purple-400">
+                    SUPER METER
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    {[1, 2, 3].map((pip) => (
+                      <div
+                        key={pip}
+                        className={`w-6 h-3 rounded-sm border transition-all ${
+                          p1State.superMeter >= pip
+                            ? 'bg-purple-500 border-purple-300 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse'
+                            : 'bg-zinc-900 border-zinc-700'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Active Buff Badges */}
+                <div className="flex flex-wrap gap-1 mt-1.5">
+                  {(p1State.activeBuffs.hypeStacks || 0) > 0 && (
+                    <span className="font-pixel text-[8px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500 font-bold">
+                      🔥 HYPE x{p1State.activeBuffs.hypeStacks}
+                    </span>
+                  )}
+                  {(p1State.activeBuffs.poisonStacks || 0) > 0 && (
+                    <span className="font-pixel text-[8px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-500 font-bold">
+                      ☣ POISON x{p1State.activeBuffs.poisonStacks}
+                    </span>
+                  )}
+                  {(p1State.activeBuffs.burnStacks || 0) > 0 && (
+                    <span className="font-pixel text-[8px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded border border-red-500 font-bold">
+                      ♨ BURN x{p1State.activeBuffs.burnStacks}
+                    </span>
+                  )}
+                </div>
+
+              </div>
             </div>
           </div>
+
+          {/* Center Versus Indicator */}
+          <div className="col-span-2 flex flex-col items-center justify-center text-center">
+            <div className="w-12 h-12 rounded-full bg-black border-2 border-red-500 flex items-center justify-center font-arcade-action text-white font-black text-xl shadow-[0_0_15px_rgba(239,68,68,0.7)] text-shadow-arcade">
+              VS
+            </div>
+            <span className="font-pixel text-[8px] uppercase text-zinc-300 tracking-widest mt-1">
+              SIMULTANEOUS
+            </span>
+          </div>
+
+          {/* P2 HUD */}
+          <div className="col-span-5 bg-black/95 p-3.5 rounded-2xl border-2 border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
+            <div className="flex items-center gap-3 mb-1 flex-row-reverse">
+              <img
+                src={p2State.fighter.image}
+                alt={p2State.fighter.name}
+                className="w-14 h-16 object-cover rounded-lg border-2 border-red-500 shadow-md"
+                referrerPolicy="no-referrer"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="font-pixel text-[11px] font-bold text-red-400">
+                    {p2State.currentHp} / {p2State.maxHp} HP
+                  </span>
+                  <span className="font-arcade-action text-2xl sm:text-3xl font-black uppercase text-white tracking-wide truncate text-shadow-arcade">
+                    {p2State.fighter.name} {gameMode === 'vs_ai' ? '(CPU)' : '(P2)'}
+                  </span>
+                </div>
+                
+                {/* HP Bar */}
+                <div className="h-5 bg-zinc-950 rounded border-2 border-red-500/80 overflow-hidden relative mt-1 shadow-inner">
+                  <div 
+                    className="h-full bg-gradient-to-l from-red-500 via-amber-400 to-yellow-300 transition-all duration-300 ml-auto"
+                    style={{ width: `${(p2State.currentHp / p2State.maxHp) * 100}%` }}
+                  />
+                </div>
+
+                {/* Super Meter (3 Pips) */}
+                <div className="flex items-center justify-between mt-2">
+                  <div className="flex items-center gap-1.5">
+                    {[1, 2, 3].map((pip) => (
+                      <div
+                        key={pip}
+                        className={`w-6 h-3 rounded-sm border transition-all ${
+                          p2State.superMeter >= pip
+                            ? 'bg-purple-500 border-purple-300 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse'
+                            : 'bg-zinc-900 border-zinc-700'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="font-pixel text-[8px] uppercase font-bold text-purple-400">
+                    SUPER METER
+                  </span>
+                </div>
+
+                {/* Active Buff Badges */}
+                <div className="flex flex-wrap justify-end gap-1 mt-1.5">
+                  {(p2State.activeBuffs.hypeStacks || 0) > 0 && (
+                    <span className="font-pixel text-[8px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500 font-bold">
+                      🔥 HYPE x{p2State.activeBuffs.hypeStacks}
+                    </span>
+                  )}
+                  {(p2State.activeBuffs.poisonStacks || 0) > 0 && (
+                    <span className="font-pixel text-[8px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-500 font-bold">
+                      ☣ POISON x{p2State.activeBuffs.poisonStacks}
+                    </span>
+                  )}
+                  {(p2State.activeBuffs.burnStacks || 0) > 0 && (
+                    <span className="font-pixel text-[8px] bg-red-950 text-red-300 px-1.5 py-0.5 rounded border border-red-500 font-bold">
+                      ♨ BURN x{p2State.activeBuffs.burnStacks}
+                    </span>
+                  )}
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -508,10 +655,10 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
         <div className="max-w-4xl mx-auto my-6 p-6 rounded-3xl bg-zinc-950/95 border-2 border-amber-500/60 shadow-2xl shadow-amber-500/20 comic-dots">
           
           <div className="text-center mb-6">
-            <span className="text-xs uppercase font-bold tracking-widest text-amber-400 block font-display">
+            <span className="text-xs uppercase font-bold tracking-widest text-white/90 block font-display">
               RESOLUTION — TURN {lastResolution.turnNumber}
             </span>
-            <h3 className="font-arcade text-3xl sm:text-5xl font-black uppercase text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-red-500 to-rose-500 text-shadow-arcade">
+            <h3 className="font-arcade text-3xl sm:text-5xl font-black uppercase text-white text-shadow-arcade">
               {lastResolution.headline}
             </h3>
           </div>
@@ -634,29 +781,29 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
 
       {/* SELECTION PHASE: Hand & Card Selector */}
       {phase === 'select' && (
-        <div className="max-w-7xl mx-auto space-y-4">
+        <div className="max-w-7xl mx-auto space-y-3 sm:space-y-4 pb-28 sm:pb-32">
           
           {/* Action Instruction Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-amber-400 animate-ping" />
-                <h3 className="font-arcade text-2xl sm:text-3xl font-bold uppercase text-zinc-100">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-900/90 border border-zinc-800">
+            <div className="text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping shrink-0" />
+                <h3 className="font-arcade text-lg sm:text-3xl font-black uppercase text-white tracking-wide truncate text-shadow-arcade">
                   {gameMode === 'pass_and_play' 
-                    ? passAndPlayTurn === 'p1' ? `${p1State.fighter.name} (P1): SELECT SECRET MOVE` : `${p2State.fighter.name} (P2): SELECT SECRET MOVE`
-                    : `${p1State.fighter.name}: SELECT YOUR COMBAT CARD`}
+                    ? passAndPlayTurn === 'p1' ? `${p1State.fighter.name} (P1): SELECT MOVE` : `${p2State.fighter.name} (P2): SELECT MOVE`
+                    : `${p1State.fighter.name}: SELECT MOVE`}
                 </h3>
               </div>
-              <p className="text-xs text-zinc-400">
-                Pick your move secretly. Both players reveal simultaneously when locked in!
+              <p className="text-[10px] sm:text-xs text-zinc-300 mt-0.5">
+                Tap card to select • Tap again or tap Lock button below to confirm!
               </p>
             </div>
 
             {/* Hand Filter Tabs */}
-            <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs font-bold">
+            <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg sm:rounded-xl border border-zinc-800 text-[10px] sm:text-xs font-bold overflow-x-auto max-w-full">
               <button
                 onClick={() => setActiveTabHand('all')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
+                className={`px-2 sm:px-2.5 py-1 rounded transition-all shrink-0 ${
                   activeTabHand === 'all' ? 'bg-amber-500 text-black font-black' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -664,7 +811,7 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
               </button>
               <button
                 onClick={() => setActiveTabHand('basics')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
+                className={`px-2 sm:px-2.5 py-1 rounded transition-all shrink-0 ${
                   activeTabHand === 'basics' ? 'bg-amber-500 text-black font-black' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -672,7 +819,7 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
               </button>
               <button
                 onClick={() => setActiveTabHand('specials')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
+                className={`px-2 sm:px-2.5 py-1 rounded transition-all shrink-0 ${
                   activeTabHand === 'specials' ? 'bg-amber-500 text-black font-black' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -680,7 +827,7 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
               </button>
               <button
                 onClick={() => setActiveTabHand('finisher')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
+                className={`px-2 sm:px-2.5 py-1 rounded transition-all shrink-0 ${
                   activeTabHand === 'finisher' ? 'bg-amber-500 text-black font-black' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -690,10 +837,11 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
           </div>
 
           {/* Player's Available Hand of Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4 justify-items-center">
             {filteredHand.map((card) => {
-              const isSelected = (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State : p1State).selectedCard?.id === card.id;
-              const hasMeter = !card.superCost || (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State.superMeter : p1State.superMeter) >= card.superCost;
+              const activePlayerState = (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State : p1State);
+              const isSelected = activePlayerState.selectedCard?.id === card.id;
+              const hasMeter = !card.superCost || activePlayerState.superMeter >= card.superCost;
               return (
                 <CardItem
                   key={card.id}
@@ -702,11 +850,19 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
                   isDisabled={!hasMeter}
                   size="md"
                   onClick={() => {
-                    if (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2') {
-                      handleP2CardSelect(card);
+                    if (isSelected) {
+                      // Second tap on already selected card locks it in immediately!
+                      handleLockIn();
                     } else {
-                      handleP1CardSelect(card);
+                      if (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2') {
+                        handleP2CardSelect(card);
+                      } else {
+                        handleP1CardSelect(card);
+                      }
                     }
+                  }}
+                  onQuickLock={() => {
+                    handleLockIn();
                   }}
                   fighterColor={activeViewingPlayer.fighter.accentHex}
                 />
@@ -714,36 +870,49 @@ export const ArenaBattle: React.FC<ArenaBattleProps> = ({
             })}
           </div>
 
-          {/* Bottom Lock In Action Dock */}
-          <div className="sticky bottom-4 z-40 max-w-xl mx-auto p-3 rounded-2xl bg-zinc-950/95 border-2 border-amber-500/80 shadow-2xl backdrop-blur-md flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-700 flex items-center justify-center font-arcade text-lg text-amber-400 font-bold">
-                ✓
-              </div>
-              <div className="leading-tight">
-                <span className="text-[10px] uppercase font-bold text-zinc-400 block">
-                  SELECTED MOVE:
-                </span>
-                <span className="font-arcade text-xl font-bold text-zinc-100 uppercase">
-                  {(gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State : p1State).selectedCard?.name || 'No Card Selected'}
-                </span>
-              </div>
-            </div>
+          {/* ZERO-SCROLL FIXED FLOATING LOCK IN ACTION DOCK */}
+          {(() => {
+            const currentSelectedCard = (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State : p1State).selectedCard;
+            return (
+              <div className="fixed bottom-2 sm:bottom-4 left-2 right-2 sm:left-1/2 sm:-translate-x-1/2 sm:w-[540px] z-50 p-2 sm:p-3 rounded-2xl bg-zinc-950/95 border-2 border-amber-400 shadow-[0_0_30px_rgba(0,0,0,0.95),0_0_15px_rgba(245,158,11,0.5)] backdrop-blur-lg flex items-center justify-between gap-2 sm:gap-4 animate-fade-in">
+                
+                {/* Selected Card Status Info */}
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center font-arcade text-base sm:text-lg font-bold shrink-0 transition-colors ${
+                    currentSelectedCard ? 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.5)]' : 'bg-zinc-900 border-zinc-700 text-zinc-600'
+                  }`}>
+                    {currentSelectedCard ? '⚡' : '—'}
+                  </div>
+                  
+                  <div className="leading-tight min-w-0">
+                    <span className="text-[8px] sm:text-[9px] uppercase font-pixel tracking-wider text-zinc-400 block truncate">
+                      {currentSelectedCard ? 'READY TO LOCK:' : 'SELECT A MOVE'}
+                    </span>
+                    <span className={`font-arcade text-sm sm:text-xl font-black uppercase truncate block ${
+                      currentSelectedCard ? 'text-white text-shadow-arcade' : 'text-zinc-500'
+                    }`}>
+                      {currentSelectedCard ? currentSelectedCard.name : 'Tap any card above'}
+                    </span>
+                  </div>
+                </div>
 
-            <button
-              id="lock-in-move-btn"
-              disabled={!(gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State : p1State).selectedCard}
-              onClick={handleLockIn}
-              className={`px-6 py-3 rounded-xl font-arcade text-2xl font-black uppercase tracking-wider transition-all flex items-center gap-2 ${
-                (gameMode === 'pass_and_play' && passAndPlayTurn === 'p2' ? p2State : p1State).selectedCard
-                  ? 'bg-gradient-to-r from-amber-500 via-red-600 to-rose-600 text-white shadow-lg shadow-red-600/40 hover:scale-105 active:scale-95 cursor-pointer border border-amber-300'
-                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700'
-              }`}
-            >
-              <span>LOCK IN MOVE</span>
-              <Play className="w-4 h-4 fill-current" />
-            </button>
-          </div>
+                {/* Lock In Button (Always visible on screen without scrolling) */}
+                <button
+                  id="lock-in-move-btn"
+                  disabled={!currentSelectedCard}
+                  onClick={handleLockIn}
+                  className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-arcade text-base sm:text-2xl font-black uppercase tracking-wider transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
+                    currentSelectedCard
+                      ? 'bg-gradient-to-r from-amber-400 via-red-600 to-rose-600 text-white shadow-[0_0_20px_rgba(239,68,68,0.8)] hover:scale-105 active:scale-95 cursor-pointer border-2 border-yellow-200 animate-pulse'
+                      : 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700 opacity-60'
+                  }`}
+                >
+                  <span>LOCK IN</span>
+                  <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                </button>
+              </div>
+            );
+          })()}
 
         </div>
       )}

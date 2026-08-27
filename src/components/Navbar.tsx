@@ -11,6 +11,7 @@ interface NavbarProps {
   setIsMuted: (muted: boolean) => void;
   isCrtEnabled: boolean;
   setIsCrtEnabled: (crt: boolean) => void;
+  onGoHome?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,7 +20,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   isMuted,
   setIsMuted,
   isCrtEnabled,
-  setIsCrtEnabled
+  setIsCrtEnabled,
+  onGoHome
 }) => {
   const toggleAudio = () => {
     const nextState = sound.toggleMute();
@@ -34,6 +36,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     setActiveTab(tab);
   };
 
+  const handleLogoClick = () => {
+    if (onGoHome) {
+      onGoHome();
+    } else {
+      handleTab('battle');
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b-2 border-amber-500/60 shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
       
@@ -44,18 +54,19 @@ export const Navbar: React.FC<NavbarProps> = ({
         
         {/* Left Side: On-Screen Game Title Status */}
         <div 
-          onClick={() => handleTab('battle')}
+          onClick={handleLogoClick}
           className="flex items-center gap-2 cursor-pointer select-none group"
+          title="Return to Home / Character Select"
         >
           <div className="w-8 h-8 rounded-lg bg-black border border-amber-500/80 flex items-center justify-center shadow-[0_0_8px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform">
             <Flame className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           <div className="flex flex-col">
-            <span className="font-arcade-action text-base sm:text-lg text-amber-300 tracking-wider">
+            <span className="font-arcade-action text-base sm:text-lg text-white tracking-wider group-hover:text-amber-300 transition-colors">
               KICK ⚡ PUNCH
             </span>
             <span className="font-pixel text-[7px] text-zinc-400">
-              CPS-II TURBO SYSTEM
+              CPS-II TURBO SYSTEM • HOME
             </span>
           </div>
         </div>

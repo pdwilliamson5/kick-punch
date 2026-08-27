@@ -14,6 +14,7 @@ interface CardItemProps {
   isRevealed?: boolean;
   isFaceDown?: boolean;
   onClick?: () => void;
+  onQuickLock?: () => void;
   size?: 'sm' | 'md' | 'lg';
   showCost?: boolean;
   fighterColor?: string;
@@ -26,6 +27,7 @@ export const CardItem: React.FC<CardItemProps> = ({
   isDisabled = false,
   isFaceDown = false,
   onClick,
+  onQuickLock,
   size = 'md',
   showCost = true,
   fighterColor = '#ef4444',
@@ -239,6 +241,19 @@ export const CardItem: React.FC<CardItemProps> = ({
       {/* Finisher Glow Accents */}
       {card.type === 'finisher' && (
         <div className="absolute inset-0 border-2 border-amber-400 rounded-xl pointer-events-none shadow-[0_0_15px_rgba(245,158,11,0.8)] animate-pulse" />
+      )}
+
+      {/* Selected Card Quick Lock Overlay Button */}
+      {isSelected && onQuickLock && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onQuickLock();
+          }}
+          className="absolute bottom-1.5 inset-x-1.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-400 via-red-500 to-rose-600 text-white font-arcade-action text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_0_15px_rgba(239,68,68,0.9)] border-2 border-yellow-200 z-30 animate-pulse flex items-center justify-center gap-1 hover:scale-105 active:scale-95 transition-transform"
+        >
+          <span>⚡ LOCK IN</span>
+        </button>
       )}
     </div>
   );

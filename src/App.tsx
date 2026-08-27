@@ -40,6 +40,12 @@ export default function App() {
     setIsBattling(false);
   };
 
+  const handleGoHome = () => {
+    sound.playCardSelect();
+    setActiveTab('battle');
+    setIsBattling(false);
+  };
+
   const handleEquipLoadout = (fighterId: string, specials: CombatCard[], finisher: CombatCard) => {
     if (p1Fighter.id === fighterId) {
       setP1Fighter(prev => ({
@@ -63,6 +69,7 @@ export default function App() {
       setIsMuted={setIsMuted}
       isCrtEnabled={isCrtEnabled}
       setIsCrtEnabled={setIsCrtEnabled}
+      onGoHome={handleGoHome}
     >
       {/* Top On-Screen Navigation & Channel Bar */}
       <Navbar
@@ -70,6 +77,7 @@ export default function App() {
         setActiveTab={(tab) => {
           setActiveTab(tab);
         }}
+        onGoHome={handleGoHome}
         isMuted={isMuted}
         setIsMuted={setIsMuted}
         isCrtEnabled={isCrtEnabled}
@@ -126,7 +134,14 @@ export default function App() {
 
       {/* In-Screen CRT Status / Bottom Border Bar */}
       <div className="border-t border-zinc-800 bg-black/90 py-2.5 px-4 flex flex-col sm:flex-row items-center justify-between text-[8px] font-pixel text-zinc-500 gap-2">
-        <span>KICK PUNCH • ARCADE VER 2.4.0</span>
+        <button
+          onClick={handleGoHome}
+          className="text-amber-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+          title="Return to Home / Character Select"
+        >
+          <span className="text-white font-bold">◄</span>
+          <span>KICK PUNCH • ARCADE VER 2.4.0 (HOME)</span>
+        </button>
         <span className="text-amber-400/90">CREDIT 02 • FREE PLAY READY</span>
         <span>© 1994 ALL RIGHTS RESERVED</span>
       </div>
